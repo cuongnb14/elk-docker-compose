@@ -14,3 +14,7 @@ Runcommand: `make up`
 Note: It will remove all database
 
 Runcommand: `make clean && make up` 
+
+## Check result
+
+Runcommand: `curl -s 'localhost:9200/_cat/indices?v'`
