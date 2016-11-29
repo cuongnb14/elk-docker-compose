@@ -1,0 +1,15 @@
+filebeat:
+  prospectors:
+    -
+      input_type: log
+      tail_files: false
+      fields:
+        index_field: onfta_api
+      fields_under_root: true
+      paths:
+        - /logs/*.log
+
+output:
+  redis:
+    hosts: ["redis"]
+    key: "filebeat"
