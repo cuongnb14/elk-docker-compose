@@ -9,11 +9,11 @@ file-log.log -> filebeat -> redis -> logstash -> elasticsearch -> kibana
 
 Runcommand: `make up`
 
-## Redeploy 
+## Redeploy
 
 Note: It will remove all database
 
-Runcommand: `make clean && make up` 
+Runcommand: `make reup`
 
 ## Check result
 
