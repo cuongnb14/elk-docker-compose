@@ -1,0 +1,100 @@
+#
+# syntax: https://docs.docker.com/compose/yml/
+# author: cuongnb14@gmail.com
+#
+
+version: "2"
+
+
+services:
+    elasticsearch:
+        image: elasticsearch:5.0
+        networks:
+            - elk-back
+        ports:
+            - "9200:9200"
+            - "9300:9300"
+        environment:
+            - ES_CLUSTERNAME=onftalogging
+        volumes:
+            - ./elasticsearch-config:/usr/share/elasticsearch/config
+            - ./elasticsearch-data:/usr/share/elasticsearch/data
+        hostname: elasticsearch
+        domainname: elasticsearch.lan
+        cpu_shares: 512             # 0.5 CPU
+        mem_limit: 1036870912        # 2G RAM
+        #privileged: true
+        #restart: always
+        #stdin_open: true
+        tty: true
+
+    kibana:
+        image: kibana:5.0
+        depends_on:
+            - elasticsearch
+        networks:
+            - elk-back
+        ports:
+           - "0.0.0.0:5601:5601"
+        hostname: kibana
+        domainname: kibana.lan
+        cpu_shares: 512             # 0.5 CPU
+        mem_limit: 536870912        # 512 MB RAM
+        #privileged: true
+        #restart: always
+        #stdin_open: true
+        tty: true
+
+    filebeat:
+        image: prima/filebeat:5.0-rc
+        depends_on:
+            - redis
+        networks:
+            - elk-back
+        volumes:
+            - ./filebeat-config/filebeat.yml:/filebeat.yml
+            - /home/cuongnb/Computer/Higgs/elk/logs/api.request.log:/logs/request.log
+        hostname: filebeat
+        domainname: filebeat.lan
+        cpu_shares: 512             # 0.5 CPU
+        mem_limit: 536870912        # 512 MB RAM
+        #privileged: true
+        #restart: always
+        #stdin_open: true
+        tty: true
+
+    redis:
+        image: redis
+        networks:
+            - elk-back
+        #ports:
+        #    - "0.0.0.0:6379:6379"
+        hostname: redis
+        cpu_shares: 512
+        mem_limit: 536870912
+        #restart: always
+
+    logstash:
+        image: logstash:5.0
+        depends_on:
+            - redis
+            - elasticsearch
+        networks:
+            - elk-back
+        # ports:
+            # - "25826:25826"
+            # - "25826:25826/udp"
+        volumes:
+            - ./logstash-config/:/conf
+        command: logstash -f /conf/central.conf
+        hostname: logstash-central
+        domainname: coclab.lan
+        cpu_shares: 512             # 0.5 CPU
+        mem_limit: 536870912        # 1G RAM
+        # privileged: true
+        # restart: always
+        # stdin_open: true
+        tty: true
+
+networks:
+    elk-back:
