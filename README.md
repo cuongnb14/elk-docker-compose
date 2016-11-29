@@ -1,5 +1,5 @@
 # elk-docker-compose
-Deploy logging system elk (elasticsearch - logstash - kibana) by docker compose
+Deploy logging system elk 5.0 (elasticsearch - logstash - kibana) by docker compose
 
 ## Overview
 
