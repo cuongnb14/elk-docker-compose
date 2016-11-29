@@ -22,7 +22,7 @@ services:
         hostname: elasticsearch
         domainname: elasticsearch.lan
         cpu_shares: 512             # 0.5 CPU
-        mem_limit: 1036870912        # 2G RAM
+        mem_limit: 2147483648        # 2G RAM
         #privileged: true
         #restart: always
         #stdin_open: true
@@ -70,8 +70,8 @@ services:
         #ports:
         #    - "0.0.0.0:6379:6379"
         hostname: redis
-        cpu_shares: 512
-        mem_limit: 536870912
+        cpu_shares: 512           # 0.5 CPU
+        mem_limit: 536870912      # 512 MB RAM
         #restart: always
 
     logstash:
@@ -90,7 +90,7 @@ services:
         hostname: logstash-central
         domainname: coclab.lan
         cpu_shares: 512             # 0.5 CPU
-        mem_limit: 536870912        # 1G RAM
+        mem_limit: 1073741824        # 1G RAM
         # privileged: true
         # restart: always
         # stdin_open: true
