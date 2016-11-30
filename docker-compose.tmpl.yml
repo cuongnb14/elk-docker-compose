@@ -30,8 +30,8 @@ services:
         logging:
             driver: "json-file"
             options:
-            max-size: "100M"
-            max-file: "3"
+                max-size: "100M"
+                max-file: "3"
 
     kibana:
         image: kibana:5.0
@@ -52,8 +52,8 @@ services:
         logging:
             driver: "json-file"
             options:
-            max-size: "100M"
-            max-file: "3"
+                max-size: "100M"
+                max-file: "3"
 
     filebeat:
         image: prima/filebeat:5.0-rc
@@ -75,8 +75,8 @@ services:
         logging:
             driver: "json-file"
             options:
-            max-size: "100M"
-            max-file: "3"
+                max-size: "100M"
+                max-file: "3"
 
     redis:
         image: redis
@@ -91,8 +91,8 @@ services:
         logging:
             driver: "json-file"
             options:
-            max-size: "100M"
-            max-file: "3"
+                max-size: "100M"
+                max-file: "3"
 
     logstash:
         image: logstash:5.0
@@ -118,8 +118,8 @@ services:
         logging:
             driver: "json-file"
             options:
-            max-size: "100M"
-            max-file: "3"
+                max-size: "100M"
+                max-file: "3"
 
 networks:
     elk-back:
