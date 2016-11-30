@@ -27,6 +27,11 @@ services:
         #restart: always
         #stdin_open: true
         tty: true
+        logging:
+            driver: "json-file"
+            options:
+            max-size: "100M"
+            max-file: "3"
 
     kibana:
         image: kibana:5.0
@@ -44,6 +49,11 @@ services:
         #restart: always
         #stdin_open: true
         tty: true
+        logging:
+            driver: "json-file"
+            options:
+            max-size: "100M"
+            max-file: "3"
 
     filebeat:
         image: prima/filebeat:5.0-rc
@@ -62,6 +72,11 @@ services:
         #restart: always
         #stdin_open: true
         tty: true
+        logging:
+            driver: "json-file"
+            options:
+            max-size: "100M"
+            max-file: "3"
 
     redis:
         image: redis
@@ -73,6 +88,11 @@ services:
         cpu_shares: 512           # 0.5 CPU
         mem_limit: 536870912      # 512 MB RAM
         #restart: always
+        logging:
+            driver: "json-file"
+            options:
+            max-size: "100M"
+            max-file: "3"
 
     logstash:
         image: logstash:5.0
@@ -95,6 +115,11 @@ services:
         # restart: always
         # stdin_open: true
         tty: true
+        logging:
+            driver: "json-file"
+            options:
+            max-size: "100M"
+            max-file: "3"
 
 networks:
     elk-back:
