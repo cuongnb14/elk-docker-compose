@@ -7,6 +7,10 @@ file-log.log -> filebeat -> redis -> logstash -> elasticsearch -> kibana
 
 ## Deploy
 
+Rename file docker-compose.tmpl.yml : `cp docker-compose.tmpl.yml docker-compose.yml`
+
+Reconfig cpu, ram for containers
+
 Runcommand: `make up`
 
 ## Redeploy
