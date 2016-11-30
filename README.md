@@ -13,6 +13,9 @@ Reconfig cpu, ram for containers
 
 Runcommand: `make up`
 
+If can't run elasticsearch container you should run command on hosts: `sysctl -w vm.max_map_count=262144`
+
+See: [https://www.elastic.co/guide/en/elasticsearch/reference/5.0/vm-max-map-count.html](https://www.elastic.co/guide/en/elasticsearch/reference/5.0/vm-max-map-count.html)
 ## Redeploy
 
 Note: It will remove all database
