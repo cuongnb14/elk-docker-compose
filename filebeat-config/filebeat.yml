@@ -2,10 +2,13 @@ filebeat:
   prospectors:
     -
       input_type: log
+      # read from first line of file
       tail_files: false
+      # add index field (to determine index name in elasticsearch)
       fields:
         index_field: onfta_api
       fields_under_root: true
+
       paths:
         - /logs/*.log
 
