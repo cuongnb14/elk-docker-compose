@@ -1,9 +1,11 @@
 # elk-docker-compose
 Deploy logging system elk 5.0 (elasticsearch - logstash - kibana) by docker compose
 
-## Overview
+## Architecture Overview 
 
-file-log.log -> filebeat -> redis -> logstash -> elasticsearch -> kibana <- nginx <- user
+![architecture](https://github.com/cuongnb14/elk-docker-compose/raw/master/architecture.png)
+
+Note: Use nginx to authen for kibana
 
 ## Deploy
 
@@ -25,3 +27,8 @@ Note: It will remove all database
 ## Check result
 
 - Runcommand: `curl -s 'localhost:9200/_cat/indices?v'`
+
+## Use
+
+- Access: `http://localhost:8080/`
+- Authen by: username `USER`, pass `PASSWORD`
