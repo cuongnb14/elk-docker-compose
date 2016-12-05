@@ -3,15 +3,15 @@ Deploy logging system elk 5.0 (elasticsearch - logstash - kibana) by docker comp
 
 ## Overview
 
-file-log.log -> filebeat -> redis -> logstash -> elasticsearch -> kibana
+file-log.log -> filebeat -> redis -> logstash -> elasticsearch -> kibana <- nginx <- user
 
 ## Deploy
 
-Rename file docker-compose.tmpl.yml : `cp docker-compose.tmpl.yml docker-compose.yml`
+- Rename file docker-compose.tmpl.yml : `cp docker-compose.tmpl.yml docker-compose.yml`
 
-Reconfig cpu, ram for containers
+- Reconfig cpu, ram for containers
 
-Runcommand: `make up`
+- Runcommand: `make up`
 
 If can't run elasticsearch container you should run command on hosts: `sysctl -w vm.max_map_count=262144`
 
@@ -20,8 +20,8 @@ See: [https://www.elastic.co/guide/en/elasticsearch/reference/5.0/vm-max-map-cou
 
 Note: It will remove all database
 
-Runcommand: `make reup`
+- Runcommand: `make reup`
 
 ## Check result
 
-Runcommand: `curl -s 'localhost:9200/_cat/indices?v'`
+- Runcommand: `curl -s 'localhost:9200/_cat/indices?v'`
