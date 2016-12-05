@@ -121,5 +121,25 @@ services:
                 max-size: "100M"
                 max-file: "3"
 
+    nginx:
+        image: nginx:1.11.6
+        depends_on:
+            - kibana
+        networks:
+            - elk-back
+        ports:
+            - "0.0.0.0:8080:80"
+        volumes:
+            - ./nginx-config/:/etc/nginx/conf.d/
+        command: /bin/bash -c "nginx -g 'daemon off;'"
+        cpu_shares: 512           # 0.5 CPU
+        mem_limit: 536870912      # 512 MB RAM
+        #restart: always
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "100M"
+                max-file: "3"
+
 networks:
     elk-back:
