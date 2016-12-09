@@ -9,11 +9,23 @@ Note: Use nginx to authen for kibana
 
 ## Deploy
 
-- Rename file docker-compose.tmpl.yml : `cp docker-compose.tmpl.yml docker-compose.yml`
+- Create file docker-compose.yml: `cp docker-compose.tmpl.yml docker-compose.yml`
 
-- Reconfig cpu, ram for containers
+- Reconfig cpu, ram for containers and mount logs folder for filebeat
 
-- Runcommand: `make up`
+- Create file filebeat.yml:  `cp filebeat-config/filebeat.tmpl.yml filebeat-config/filebeat.yml`
+
+- Reconfig for filebeat
+
+- Create file logstash.conf: `cp logstash-config/central.tmpl.conf logstash-config/central.conf`
+
+- Reconfig for logstash
+
+- Use openssl to create username and password for nginx: 
+
+    `printf "USER:$(openssl passwd -crypt PASSWORD)\n" > nginx-config/passwords`
+
+- Run command: `make up`
 
 If can't run elasticsearch container you should run command on hosts: `sysctl -w vm.max_map_count=262144`
 
@@ -22,11 +34,7 @@ See: [https://www.elastic.co/guide/en/elasticsearch/reference/5.0/vm-max-map-cou
 
 Note: It will remove all database
 
-- Runcommand: `make reup`
-
-## Check result
-
-- Runcommand: `curl -s 'localhost:9200/_cat/indices?v'`
+- Run command: `make reup`
 
 ## Use
 
