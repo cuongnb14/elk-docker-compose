@@ -22,7 +22,7 @@ services:
         hostname: elasticsearch
         domainname: elasticsearch.lan
         cpu_shares: 512             # 0.5 CPU
-        mem_limit: 2147483648        # 2G RAM
+        mem_limit: 4294967296        # 4G RAM
         #privileged: true
         #restart: always
         #stdin_open: true

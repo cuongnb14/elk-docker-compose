@@ -1,2 +1,4 @@
 elasticsearch-data/
 docker-compose.yml
+filebeat-config/filebeat.yml
+logstash-config/central.conf
