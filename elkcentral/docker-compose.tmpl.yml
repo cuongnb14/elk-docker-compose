@@ -55,29 +55,6 @@ services:
                 max-size: "100M"
                 max-file: "3"
 
-    filebeat:
-        image: prima/filebeat:5.0-rc
-        depends_on:
-            - redis
-        networks:
-            - elk-back
-        volumes:
-            - ./filebeat-config/filebeat.yml:/filebeat.yml
-            - /home/cuongnb/Computer/Higgs/elk/logs/api.request.log:/logs/request.log
-        hostname: filebeat
-        domainname: filebeat.lan
-        cpu_shares: 512             # 0.5 CPU
-        mem_limit: 536870912        # 512 MB RAM
-        #privileged: true
-        #restart: always
-        #stdin_open: true
-        tty: true
-        logging:
-            driver: "json-file"
-            options:
-                max-size: "100M"
-                max-file: "3"
-
     redis:
         image: redis
         networks:

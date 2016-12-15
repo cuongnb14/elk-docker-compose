@@ -1,5 +1,6 @@
-elasticsearch-data/
-docker-compose.yml
-filebeat-config/filebeat.yml
-logstash-config/central.conf
-nginx-config/passwords
+elkcentral/elasticsearch-data/
+elkcentral/docker-compose.yml
+elkagent/docker-compose.yml
+elkagent/filebeat-config/filebeat.yml
+elkcentral/logstash-config/central.conf
+elkcentral/nginx-config/passwords
