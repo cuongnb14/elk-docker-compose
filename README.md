@@ -9,13 +9,11 @@ Note: Use nginx to authen for kibana
 
 ## Deploy
 
+### Central
+
+Use elkcentral folder.
+
 - Create file docker-compose.yml: `cp docker-compose.tmpl.yml docker-compose.yml`
-
-- Reconfig cpu, ram for containers and mount logs folder for filebeat
-
-- Create file filebeat.yml:  `cp filebeat-config/filebeat.tmpl.yml filebeat-config/filebeat.yml`
-
-- Reconfig for filebeat
 
 - Create file logstash.conf: `cp logstash-config/central.tmpl.conf logstash-config/central.conf`
 
@@ -30,6 +28,20 @@ Note: Use nginx to authen for kibana
 If can't run elasticsearch container you should run command on hosts: `sysctl -w vm.max_map_count=262144`
 
 See: [https://www.elastic.co/guide/en/elasticsearch/reference/5.0/vm-max-map-count.html](https://www.elastic.co/guide/en/elasticsearch/reference/5.0/vm-max-map-count.html)
+
+### Agent
+
+Use elkagent folder.
+
+- Create file docker-compose.yml: `cp docker-compose.tmpl.yml docker-compose.yml`
+
+- Reconfig cpu, ram for containers and mount logs folder for filebeat
+
+- Create file filebeat.yml:  `cp filebeat-config/filebeat.tmpl.yml filebeat-config/filebeat.yml`
+
+- Reconfig for filebeat
+
+
 ## Redeploy
 
 Note: It will remove all database
