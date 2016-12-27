@@ -9,13 +9,9 @@ services:
 
     filebeat:
         image: prima/filebeat:5.0-rc
-        depends_on:
-            - redis
-        networks:
-            - elk-back
         volumes:
             - ./filebeat-config/filebeat.yml:/filebeat.yml
-            - /home/cuongnb/Computer/Higgs/elk/logs/api.request.log:/logs/request.log
+            - /home/elk/logs/api.request.log:/logs/request.log
         hostname: filebeat
         domainname: filebeat.lan
         cpu_shares: 512             # 0.5 CPU
