@@ -35,12 +35,13 @@ Use elkagent folder.
 
 - Create file docker-compose.yml: `cp docker-compose.tmpl.yml docker-compose.yml`
 
-- Reconfig cpu, ram for containers and mount logs folder for filebeat
+- Reconfig cpu, ram for containers and **mount logs folder** for filebeat
 
 - Create file filebeat.yml:  `cp filebeat-config/filebeat.tmpl.yml filebeat-config/filebeat.yml`
 
-- Reconfig for filebeat
+- Reconfig for filebeat: log file, redis host
 
+- Run: `docker-compose up -d`
 
 ## Redeploy
 
