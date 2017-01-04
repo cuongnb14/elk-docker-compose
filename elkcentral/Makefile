@@ -14,3 +14,6 @@ clean:
 
 reup:
 	docker-compose stop && docker-compose rm --force && sudo rm -rf elasticsearch-data && docker-compose up -d
+
+pull:
+	git pull && make reup
