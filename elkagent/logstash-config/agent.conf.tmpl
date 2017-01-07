@@ -1,0 +1,44 @@
+input{
+    beats {
+        port => 5044
+    }
+}
+
+filter {
+    if [index_field] == "onfta_api" {
+        grok {
+            match => { "message" => '%{WORD:level}%{SPACE}%{IP:clientip}%{SPACE}\[%{TIMESTAMP_ISO8601:[@metadata][timestamp]}\]%{SPACE}%{WORD:method}%{SPACE}%{URIPATHPARAM:path}%{SPACE}%{NUMBER:response_code}%{SPACE}%{USERNAME:meta_code}%{SPACE}%{NUMBER:response_time}' }
+        }
+        date {
+            match => ["[@metadata][timestamp]", "YYYY-MM-dd HH:mm:ssZ"]
+            target => "@timestamp"
+        }
+        mutate {
+            convert => { "response_time" => "float" }
+            convert => { "response_code" => "integer" }
+        }
+    }
+
+    if [index_field] == "indexing" {
+        grok {
+            match => { "message" => '%{WORD:level}%{SPACE}\[%{TIMESTAMP_ISO8601:[@metadata][timestamp]}\]%{SPACE}indexing%{SPACE}\[%{WORD:es_index} - %{WORD:es_type}\]: %{NUMBER:total} %{NUMBER:index_time}' }
+        }
+        date {
+            match => ["[@metadata][timestamp]", "ISO8601"]
+            target => "@timestamp"
+        }
+        mutate {
+            convert => { "index_time" => "float" }
+            convert => { "total" => "integer" }
+        }
+    }
+}
+
+output{
+ #stdout { codec => rubydebug }
+    redis{
+        host => ["172.17.0.1"]
+        data_type => "list"
+        key => "logstash"
+    }
+}

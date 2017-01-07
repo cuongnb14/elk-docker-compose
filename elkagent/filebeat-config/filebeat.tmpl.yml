@@ -10,9 +10,21 @@ filebeat:
       fields_under_root: true
 
       paths:
-        - /logs/*.log
+        - /logs/api.request.log
+
+    -
+      input_type: log
+      # read from first line of file
+      tail_files: false
+      # add index field (to determine index name in elasticsearch)
+      fields:
+        index_field: indexing
+      fields_under_root: true
+
+      paths:
+        - /logs/indexing.log
 
 output:
-  redis:
-    hosts: ["redis"]
+  logstash:
+    hosts: ["logstash:5044"]
     key: "filebeat"

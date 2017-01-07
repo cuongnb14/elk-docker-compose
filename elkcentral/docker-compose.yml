@@ -1,0 +1,122 @@
+#
+# syntax: https://docs.docker.com/compose/yml/
+# author: cuongnb14@gmail.com
+#
+
+version: "2"
+
+
+services:
+    elasticsearch:
+        image: elasticsearch:5.0
+        networks:
+            - elkcentral-back
+        ports:
+            - "9200:9200"
+            - "9300:9300"
+        environment:
+            - ES_CLUSTERNAME=onftalogging
+        volumes:
+            - ./elasticsearch-config:/usr/share/elasticsearch/config
+            - ./elasticsearch-data:/usr/share/elasticsearch/data
+        hostname: elasticsearch
+        domainname: elasticsearch.lan
+        cpu_shares: 512             # 0.5 CPU
+        mem_limit: 1294967296        # 4G RAM
+        #privileged: true
+        #restart: always
+        #stdin_open: true
+        tty: true
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "100M"
+                max-file: "3"
+
+    kibana:
+        image: kibana:5.0
+        depends_on:
+            - elasticsearch
+        networks:
+            - elkcentral-back
+        ports:
+           - "0.0.0.0:5601:5601"
+        hostname: kibana
+        domainname: kibana.lan
+        cpu_shares: 512             # 0.5 CPU
+        mem_limit: 536870912        # 512 MB RAM
+        #privileged: true
+        #restart: always
+        #stdin_open: true
+        tty: true
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "100M"
+                max-file: "3"
+
+    redis:
+        image: redis
+        networks:
+            - elkcentral-back
+        ports:
+           - "0.0.0.0:6379:6379"
+        hostname: redis
+        cpu_shares: 512           # 0.5 CPU
+        mem_limit: 536870912      # 512 MB RAM
+        #restart: always
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "100M"
+                max-file: "3"
+
+    logstash:
+        image: logstash:5.0
+        depends_on:
+            - redis
+            - elasticsearch
+        networks:
+            - elkcentral-back
+        # ports:
+            # - "25826:25826"
+            # - "25826:25826/udp"
+        volumes:
+            - ./logstash-config/:/conf
+        command: logstash -f /conf/central.conf
+        hostname: logstash-central
+        domainname: coclab.lan
+        cpu_shares: 512             # 0.5 CPU
+        mem_limit: 1073741824        # 1G RAM
+        # privileged: true
+        # restart: always
+        # stdin_open: true
+        tty: true
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "100M"
+                max-file: "3"
+
+    nginx:
+        image: nginx:1.11.6
+        depends_on:
+            - kibana
+        networks:
+            - elkcentral-back
+        ports:
+            - "0.0.0.0:80:80"
+        volumes:
+            - ./nginx-config/:/etc/nginx/conf.d/
+        command: /bin/bash -c "nginx -g 'daemon off;'"
+        cpu_shares: 512           # 0.5 CPU
+        mem_limit: 536870912      # 512 MB RAM
+        #restart: always
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "100M"
+                max-file: "3"
+
+networks:
+    elkcentral-back:

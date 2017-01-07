@@ -9,9 +9,13 @@ services:
 
     filebeat:
         image: prima/filebeat:5.0-rc
+        networks:
+            - elkagent-back
+        depends_on:
+            - logstash
         volumes:
             - ./filebeat-config/filebeat.yml:/filebeat.yml
-            - /home/elk/logs/api.request.log:/logs/request.log
+            - /home/cuongnb14/Computer/higgs/elk-logging/elkagent/logs/:/logs/
         hostname: filebeat
         domainname: filebeat.lan
         cpu_shares: 512             # 0.5 CPU
@@ -25,3 +29,27 @@ services:
             options:
                 max-size: "100M"
                 max-file: "3"
+
+    logstash:
+        image: logstash:5.0
+        networks:
+            - elkagent-back
+        volumes:
+            - ./logstash-config/:/conf
+        command: logstash -f /conf/agent.conf
+        hostname: logstash-agent
+        domainname: coclab.lan
+        cpu_shares: 512             # 0.5 CPU
+        mem_limit: 1073741824        # 1G RAM
+        # privileged: true
+        # restart: always
+        # stdin_open: true
+        tty: true
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "100M"
+                max-file: "3"
+
+networks:
+    elkagent-back:

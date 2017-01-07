@@ -1,7 +1,7 @@
 # elk-docker-compose
 Deploy logging system elk 5.0 (elasticsearch - logstash - kibana) by docker compose
 
-## Architecture Overview 
+## Architecture Overview
 
 ![architecture](https://github.com/cuongnb14/elk-docker-compose/raw/master/architecture.png)
 
@@ -13,13 +13,7 @@ Note: Use nginx to authen for kibana
 
 Use elkcentral folder.
 
-- Create file docker-compose.yml: `cp docker-compose.tmpl.yml docker-compose.yml`
-
-- Create file logstash.conf: `cp logstash-config/central.tmpl.conf logstash-config/central.conf`
-
-- Reconfig for logstash
-
-- Use openssl to create username and password for nginx: 
+- Use openssl to create username and password for nginx:
 
     `printf "USER:$(openssl passwd -crypt PASSWORD)\n" > nginx-config/passwords`
 
