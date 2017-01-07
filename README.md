@@ -31,9 +31,9 @@ Use elkagent folder.
 
 - Reconfig cpu, ram for containers and **mount logs folder** for filebeat
 
-- Create file filebeat.yml:  `cp filebeat-config/filebeat.tmpl.yml filebeat-config/filebeat.yml`
+- Create file filebeat.yml and reconfig:`cp filebeat-config/filebeat.tmpl.yml filebeat-config/filebeat.yml`
 
-- Reconfig for filebeat: log file, redis host
+- Create file agent.conf and reconfig: `cp logstash-config/agent.conf.tmpl logstash-config/agent.conf`
 
 - Run: `docker-compose up -d`
 
